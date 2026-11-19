@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/venv/
+venv/
+env/
+
+# Database / Instance local temp
+*.db-journal
+instance/*.db-journal
+
+# Aider & Temp Tools
+.aider*
+aider-env/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Flutter / Dart
+frontend/.dart_tool/
+frontend/build/
+.dart_tool/
+build/
+*.lock
