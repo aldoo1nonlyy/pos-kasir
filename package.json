@@ -9,6 +9,6 @@
     "stop": "powershell -ExecutionPolicy Bypass -File ./run_app.ps1 -Stop",
     "backend": "powershell -Command \"cd backend; .\\venv\\Scripts\\python.exe app.py\"",
     "frontend": "powershell -Command \"cd frontend; & 'C:\\Users\\ADVAN\\flutter\\bin\\flutter.bat' run -d chrome --web-port=8080\"",
-    "demo": "powershell -Command \"Start-Process demo_web.html\""
+    "seed": "powershell -Command \"backend\\venv\\Scripts\\python.exe backend/pos-backend/seed_database_600_sku.py\""
   }
 }
