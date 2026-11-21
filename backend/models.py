@@ -14,6 +14,21 @@ class Book(db.Model):
     abc_class = db.Column(db.String(1), default='C', nullable=False)  # 'A', 'B', or 'C'
     last_opname_date = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
+    def __init__(self, barcode=None, title=None, category='Umum', price=0.0, stock=0, abc_class='C', last_opname_date=None, id=None, **kwargs):
+        super().__init__(**kwargs)
+        if id is not None:
+            self.id = id
+        self.barcode = barcode
+        self.title = title
+        self.category = category
+        self.price = price
+        self.stock = stock
+        self.abc_class = abc_class
+        if last_opname_date is not None:
+            self.last_opname_date = last_opname_date
+        else:
+            self.last_opname_date = datetime.now()
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -35,6 +50,19 @@ class Transaction(db.Model):
 
     items = db.relationship('TransactionItem', backref='transaction', lazy=True, cascade='all, delete-orphan')
 
+    def __init__(self, timestamp=None, total_amount=0.0, status='completed', items=None, id=None, **kwargs):
+        super().__init__(**kwargs)
+        if id is not None:
+            self.id = id
+        if timestamp is not None:
+            self.timestamp = timestamp
+        else:
+            self.timestamp = datetime.now()
+        self.total_amount = total_amount
+        self.status = status
+        if items is not None:
+            self.items = items
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -53,6 +81,19 @@ class TransactionItem(db.Model):
     subtotal = db.Column(db.Float, nullable=False)
 
     book = db.relationship('Book')
+
+    def __init__(self, transaction_id=None, book_id=None, qty=0, subtotal=0.0, book=None, id=None, **kwargs):
+        super().__init__(**kwargs)
+        if id is not None:
+            self.id = id
+        if transaction_id is not None:
+            self.transaction_id = transaction_id
+        if book_id is not None:
+            self.book_id = book_id
+        self.qty = qty
+        self.subtotal = subtotal
+        if book is not None:
+            self.book = book
 
     def to_dict(self):
         return {
@@ -77,6 +118,14 @@ class Setting(db.Model):
     key = db.Column(db.String(50), nullable=True)
     value = db.Column(db.String(200), nullable=True)
     admin_pin = db.Column(db.String(50), nullable=True, default='123456')
+
+    def __init__(self, key=None, value=None, admin_pin='123456', id=None, **kwargs):
+        super().__init__(**kwargs)
+        if id is not None:
+            self.id = id
+        self.key = key
+        self.value = value
+        self.admin_pin = admin_pin
 
     def to_dict(self):
         return {
